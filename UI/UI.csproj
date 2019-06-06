@@ -21,13 +21,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Page Include="..\UINetFx\UserControls\Test.xaml" Link="UserControls\Test.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Compile Include="..\UINetFx\UserControls\Test.xaml.cs" Link="UserControls\Test.xaml.cs" />
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="MaterialDesignThemes" Version="2.5.1" />
   </ItemGroup>
 

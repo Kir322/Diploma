@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d"
         WindowStyle="None"
+        AllowsTransparency="True"
         Title="MainWindow" Height="450" Width="800"
         
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
@@ -15,60 +16,82 @@
         TextOptions.TextRenderingMode="Auto"        
         Background="{DynamicResource MaterialDesignPaper}"
         FontFamily="{DynamicResource MaterialDesignFont}">
-    <Grid>
-        <StackPanel>
-            <Grid MouseDown="StackPanel_MouseDown" Background="{DynamicResource PrimaryHueMidBrush}" Height="50">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto"/>
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="Auto"/>
-                </Grid.ColumnDefinitions>
+    <DockPanel LastChildFill="True">
 
-                <Label 
+        <!-- Title Bar -->
+        <Grid DockPanel.Dock="Top" MouseDown="TitleBar_MouseDown" Background="{DynamicResource SecondaryAccentBrush}" Height="42">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+
+            <Button
+                    Style="{DynamicResource MaterialDesignToolButton}"
                     Margin="10"
                     VerticalAlignment="Center"
                     Grid.Column="0"
                     Foreground="{DynamicResource PrimaryHueMidForegroundBrush}"
-                    Content="Clustering App"/>
-                <!--<Label HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="1" Foreground="{DynamicResource PrimaryHueMidForegroundBrush}" Content="Hello center"/>-->
-                <StackPanel Grid.Column="2" Orientation="Horizontal">
-                    <Button
-                        Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}"
+                    Command="{Binding ShowSystemMenu}"
+                    Content="Clustering App"
+                    Cursor="Arrow"/>
+
+            <StackPanel Grid.Column="2" Orientation="Horizontal">
+                <Button
+                        Style="{DynamicResource MaterialDesignToolButton}"
                         BorderThickness="0"
-                        Foreground="{DynamicResource PrimaryHueMidForegroundBrush}"
-                        Cursor="Hand">
-                        
-                        <materialDesign:PackIcon Kind="WindowMinimize" />
-                        
-                    </Button>
-
-                    <Button
-                        Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}"
-                        BorderThickness="0"
-                        Foreground="{DynamicResource PrimaryHueMidForegroundBrush}"
-                        Cursor="Hand">
-
-                        <materialDesign:PackIcon Kind="WindowMaximize" />
-
-                    </Button>
-
-                    <Button
-                        Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}"
-                        BorderThickness="0"
+                        Height="Auto"
+                        Padding="10"
                         Foreground="{DynamicResource PrimaryHueMidForegroundBrush}"
                         Cursor="Hand"
-                        Command="ApplicationCommands.Close">
+                        Command="{Binding Minimize}">
 
-                        <materialDesign:PackIcon Kind="WindowClose" />
+                    <materialDesign:PackIcon Kind="WindowMinimize" />
 
-                    </Button>
-                </StackPanel>
-                
-                <!--<Label Margin="10" VerticalAlignment="Center" Grid.Column="2" Foreground="{DynamicResource PrimaryHueMidForegroundBrush}" Content="Hello right"/>-->
-            </Grid>
-        </StackPanel>
-        <Button Content="Hello" />
-        <Button Content="Hello" />
-        <Button Content="Hello" />
-    </Grid>
+                </Button>
+
+                <Button
+                        Style="{DynamicResource MaterialDesignToolButton}"
+                        BorderThickness="0"
+                        Height="Auto"
+                        Padding="10"
+                        Foreground="{DynamicResource PrimaryHueMidForegroundBrush}"
+                        Cursor="Hand"
+                        Command="{Binding Maximize}">
+
+                    <materialDesign:PackIcon Kind="WindowMaximize" />
+
+                </Button>
+
+                <Button
+                        Style="{DynamicResource MaterialDesignToolButton}"
+                        BorderThickness="0"
+                        Height="Auto"
+                        Padding="10"
+                        Foreground="{DynamicResource PrimaryHueMidForegroundBrush}"
+                        Cursor="Hand"
+                        Command="{Binding Close}">
+
+                    <materialDesign:PackIcon Kind="WindowClose" />
+
+                </Button>
+            </StackPanel>
+        </Grid>
+
+        <!-- Main Content -->
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="3*" />
+            </Grid.ColumnDefinitions>
+
+            <StackPanel Grid.Column="0" Background="{DynamicResource SecondaryAccentBrush}">
+                <Button Foreground="{DynamicResource PrimaryHueMidForegroundBrush}"
+                        Style="{DynamicResource MaterialDesignToolButton}"
+                        Content="test"
+                        Margin="0 10"/>
+            </StackPanel>
+        </Grid>
+    </DockPanel>
 </Window>
+    

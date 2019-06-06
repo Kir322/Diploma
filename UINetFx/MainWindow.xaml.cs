@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using UINetFx.ViewModels;
 
 namespace UINetFx
 {
@@ -23,14 +24,19 @@ namespace UINetFx
         public MainWindow()
         {
             InitializeComponent();
+
+            this.DataContext = new WindowViewModel(this);
         }
 
-        private void StackPanel_MouseDown(object sender, MouseButtonEventArgs e)
+        private void TitleBar_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            if (e.ClickCount == 2)
-                this.WindowState = this.WindowState > 0 ? WindowState.Normal : WindowState.Maximized;
-            else if (e.ChangedButton == MouseButton.Left)
-                this.DragMove();
+            if (e.ChangedButton == MouseButton.Left)
+            {
+                if (e.ClickCount == 2)
+                    this.WindowState ^= WindowState.Maximized;
+                else
+                    this.DragMove();
+            }
         }
     }
 }
