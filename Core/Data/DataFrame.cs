@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Numerics;
@@ -92,7 +93,7 @@ namespace Diploma.Core.Data
                                        .ToArray();
                 for (int j = 0; j < cols; j++)
                 {
-                    var feature = float.Parse(features[j]);
+                    var feature = float.Parse(features[j], CultureInfo.InvariantCulture);
                     result.data[i][j] = feature;
                     if (result.Min[j] > feature)
                     {

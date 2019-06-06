@@ -124,6 +124,7 @@ namespace Diploma.Core.Clustering
 
         private static float[][] PrepareResult(float[][] records, int[] indicies, int k)
         {
+            // TODO: refactor so it returns float[][][]???
             var result = new float[k][];
             var list = new List<float[]>();
 
@@ -135,7 +136,7 @@ namespace Diploma.Core.Clustering
                      index < indicies.Length;
                      ++index)
                 {
-                    if (clusterIndex == index)
+                    if (clusterIndex == indicies[index])
                     {
                         list.Add(records[index]);
                     }
