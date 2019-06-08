@@ -62,8 +62,22 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Commands\RelayCommand.cs" />
+    <Compile Include="Converters\EnumBooleanConverter.cs" />
     <Compile Include="ViewModels\BaseViewModel.cs" />
+    <Compile Include="ViewModels\CentroidDeterminingAlgorithmType.cs" />
+    <Compile Include="ViewModels\DataImportViewModel.cs" />
+    <Compile Include="ViewModels\RepresentationViewModel.cs" />
     <Compile Include="ViewModels\WindowViewModel.cs" />
+    <Compile Include="Views\ClusteringView.xaml.cs">
+      <DependentUpon>ClusteringView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ViewModels\ClusteringViewModel.cs" />
+    <Compile Include="Views\DataImportView.xaml.cs">
+      <DependentUpon>DataImportView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\RepresentationView.xaml.cs">
+      <DependentUpon>RepresentationView.xaml</DependentUpon>
+    </Compile>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -76,6 +90,18 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="Views\ClusteringView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\DataImportView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\RepresentationView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs">
@@ -105,7 +131,10 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="UserControls\" />
+    <ProjectReference Include="..\Core\Core.csproj">
+      <Project>{760a5adb-d7bd-41c8-bc71-3dbd4ea25281}</Project>
+      <Name>Core</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Globalization;
 using System.IO;
 using System.Linq;
@@ -52,6 +53,34 @@ namespace Diploma.Core.Data
         public void Normalize(int a = 0, int b = 1)
         {
             this.NormalizeImpl(a, b);
+        }
+
+        public DataTable ToDataTable()
+        {
+            var dt = new DataTable();
+
+            if (this.ColumnNames == null)
+                for (int i = 0; i < this.data[0].Length; i++)
+                {
+                    dt.Columns.Add(new DataColumn($"Feature {i}"));
+                }
+            else
+                for (int i = 0; i < this.data[0].Length; i++)
+                {
+                    dt.Columns.Add(new DataColumn(this.ColumnNames[i]));
+                }
+
+            for (int i = 0; i < this.data.Length; i++)
+            {
+                var row = dt.NewRow();
+                for (int j = 0; j < this.data[0].Length; j++)
+                {
+                    row[j] = this.data[i][j];
+                }
+                dt.Rows.Add(row);
+            }
+
+            return dt;
         }
 
         public static DataFrame ReadFromExcel(string filepath)

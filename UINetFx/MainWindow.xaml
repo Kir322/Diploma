@@ -3,10 +3,13 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:views="clr-namespace:UINetFx.Views"
+        xmlns:viewmodels="clr-namespace:UINetFx.ViewModels"
         mc:Ignorable="d"
         WindowStyle="None"
         AllowsTransparency="True"
         Title="MainWindow" Height="450" Width="800"
+        MinHeight="450" MinWidth="800"
         
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         TextElement.Foreground="{DynamicResource MaterialDesignBody}"
@@ -16,6 +19,18 @@
         TextOptions.TextRenderingMode="Auto"        
         Background="{DynamicResource MaterialDesignPaper}"
         FontFamily="{DynamicResource MaterialDesignFont}">
+    <Window.Resources>
+        <DataTemplate DataType="{x:Type viewmodels:DataImportViewModel}">
+            <views:DataImportView />
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type viewmodels:ClusteringViewModel}">
+            <views:ClusteringView />
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type viewmodels:RepresentationViewModel}">
+            <views:RepresentationView />
+        </DataTemplate>
+    </Window.Resources>
+     
     <DockPanel LastChildFill="True">
 
         <!-- Title Bar -->
@@ -78,19 +93,43 @@
             </StackPanel>
         </Grid>
 
-        <!-- Main Content -->
+        <!-- Main Template -->
         <Grid>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="3*" />
             </Grid.ColumnDefinitions>
 
-            <StackPanel Grid.Column="0" Background="{DynamicResource SecondaryAccentBrush}">
-                <Button Foreground="{DynamicResource PrimaryHueMidForegroundBrush}"
-                        Style="{DynamicResource MaterialDesignToolButton}"
-                        Content="test"
-                        Margin="0 10"/>
+            <!-- Side Bar -->
+            <StackPanel
+                Grid.Column="0"
+                Background="{DynamicResource PrimaryHueMidBrush}">
+                <Button
+                    FontSize="18"
+                    Foreground="{DynamicResource PrimaryHueMidForegroundBrush}"
+                    Style="{DynamicResource MaterialDesignToolButton}"
+                    Content="Data Import"
+                    Margin="0 50 0 0"
+                    Command="{Binding ImportData}"/>
+                <Button
+                    FontSize="18"
+                    Foreground="{DynamicResource PrimaryHueMidForegroundBrush}"
+                    Style="{DynamicResource MaterialDesignToolButton}"
+                    Content="Clustering"
+                    Margin="0 20 0 0"
+                    Command="{Binding Clustering}"/>
+                <Button
+                    FontSize="18"
+                    Foreground="{DynamicResource PrimaryHueMidForegroundBrush}"
+                    Style="{DynamicResource MaterialDesignToolButton}"
+                    Content="Representation"
+                    Margin="0 20 0 0"
+                    Command="{Binding Representation}"/>
             </StackPanel>
+            
+            <!-- Main Content -->
+            <ContentControl Grid.Column="1" Content="{Binding CurrentView, Mode=OneWay}" />
+
         </Grid>
     </DockPanel>
 </Window>
