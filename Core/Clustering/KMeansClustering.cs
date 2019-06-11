@@ -4,8 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Numerics;
-using Diploma.Core.Data;
 using System.Collections.Concurrent;
+
+using Diploma.Core.Data;
+using Diploma.Core.Distances;
+using Diploma.Core.DataStructures;
 
 namespace Diploma.Core.Clustering
 {
@@ -51,27 +54,9 @@ namespace Diploma.Core.Clustering
                      numRecords < records.Length;
                      ++numRecords)
                 {
-                    int  slots = Vector<float>.Count;
-                    int slotAllign = 0;
-                    float distanceSquared = 0.0f;
-                    for (;
-                         slotAllign + slots < records[0].Length;
-                         slotAllign += slots)
-                    {
-                        var record = new Vector<float>(records[numRecords], slotAllign);
-                        var centroid = new Vector<float>(centroids[clusterIndex], slotAllign);
-                        var diff = centroid - record;
-                        distanceSquared += Vector.Dot(diff * diff, Vector<float>.One);
-                    }
-
-                    for (;
-                         slotAllign < records[0].Length;
-                         ++slotAllign)
-                    {
-                        distanceSquared += (float)Math.Pow(centroids[clusterIndex][slotAllign] - records[numRecords][slotAllign], 2);
-                    }
-
-                    distances[clusterIndex, numRecords] = (float)Math.Sqrt(distanceSquared);
+                    
+                    distances[clusterIndex, numRecords] = Distance.Euclidean(records[numRecords],
+                                                                              centroids[clusterIndex]);
                 }
             });
         }
