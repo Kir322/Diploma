@@ -11,7 +11,7 @@ namespace Diploma.Core.Clustering
 {
     public static class KMeansClustering
     {
-        public static float[][] Clusterize(DataFrame frame, int k)
+        public static int[] Clusterize(DataFrame frame, int k)
         {
             var centroids = new float[k][];
             var distances = new float[k, frame.NumRecords];
@@ -22,7 +22,7 @@ namespace Diploma.Core.Clustering
             ComputeInitialCentroids(centroids, records, k);
 
             int iteration = 0;
-            while(iteration < 5)
+            while(iteration < 100)
             {
                 CalculateDistancesBetweenRecordsAndCentroids(distances, records, centroids);
                 ComputeClusterIndicies(clusterIndicies, distances, k);
@@ -31,7 +31,7 @@ namespace Diploma.Core.Clustering
                 iteration++;
             }
 
-            return PrepareResult(records, clusterIndicies, k);
+            return clusterIndicies;
         }
 
         private static void ComputeInitialCentroids(float[][] centroids, float[][] records, int k)
@@ -120,37 +120,6 @@ namespace Diploma.Core.Clustering
                     centroids[centroidIndex][featureIndex] = featureSum / numRecordsInCluster;
                 }
             });
-        }
-
-        private static float[][] PrepareResult(float[][] records, int[] indicies, int k)
-        {
-            // TODO: refactor so it returns float[][][]???
-            var result = new float[k][];
-            var list = new List<float[]>();
-
-            for (int clusterIndex = 0;
-                 clusterIndex < k;
-                 ++clusterIndex)
-            {
-                for (int index = 0;
-                     index < indicies.Length;
-                     ++index)
-                {
-                    if (clusterIndex == indicies[index])
-                    {
-                        list.Add(records[index]);
-                    }
-                }
-
-                result[clusterIndex] = new float[list.Count];
-                for (int i = 0; i < list.Count; ++i)
-                {
-                    result[clusterIndex] = list[i];
-                }
-                list.Clear();
-            }
-            
-            return result;
         }
     }
 }
