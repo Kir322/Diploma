@@ -10,7 +10,9 @@ namespace Diploma.Core.Distances
         {
             Debug.Assert(vec1.Length == vec2.Length);
 
-            var slots = Vector<float>.Count;
+            // @Info: Changed Vector<float>.Count to Vector4 4 because 
+            // Vector<float>.Count == 8 but takes only 4 floats
+            var slots = 4; // Vector<float>.Count;
             var allignment = 0;
             var distanceSquared = 0.0f;
 
@@ -18,10 +20,17 @@ namespace Diploma.Core.Distances
                  allignment + slots < vec1.Length;
                  allignment += slots)
             {
-                var v1 = new Vector<float>(vec1.ToArray(), allignment);
-                var v2 = new Vector<float>(vec2.ToArray(), allignment);
-                var dif = v1 - v2;
-                distanceSquared += Vector.Dot(dif * dif, Vector<float>.One);
+                var v1 = new Vector4(vec1[allignment],
+                                     vec1[allignment + 1],
+                                     vec1[allignment + 2],
+                                     vec1[allignment + 3]);
+
+                var v2 = new Vector4(vec2[allignment],
+                                     vec2[allignment + 1], 
+                                     vec2[allignment + 2], 
+                                     vec2[allignment + 3]);
+
+                distanceSquared += Vector4.DistanceSquared(v1, v2);
             }
 
             for (;
@@ -38,16 +47,26 @@ namespace Diploma.Core.Distances
         {
             Debug.Assert(vec1.Length == vec2.Length);
 
-            var slots = Vector<float>.Count;
+            // @Info: Changed Vector<float>.Count to Vector4 4 because 
+            // Vector<float>.Count == 8 but takes only 4 floats
+            var slots = 4; // Vector<float>.Count;
             var allignment = 0;
             var distance = 0.0f;
             for (;
                  allignment + slots < vec1.Length;
                  allignment += slots)
             {
-                var v1 = new Vector<float>(vec1.ToArray(), allignment);
-                var v2 = new Vector<float>(vec2.ToArray(), allignment);
-                distance += Vector.Dot(Vector.Abs(v1 - v2), Vector<float>.One);
+                var v1 = new Vector4(vec1[allignment],
+                                     vec1[allignment + 1],
+                                     vec1[allignment + 2],
+                                     vec1[allignment + 3]);
+
+                var v2 = new Vector4(vec2[allignment],
+                                     vec2[allignment + 1],
+                                     vec2[allignment + 2],
+                                     vec2[allignment + 3]);
+
+                distance += Vector4.Dot(Vector4.Abs(v1 - v2), Vector4.One);
             }
 
             for (;
@@ -64,26 +83,35 @@ namespace Diploma.Core.Distances
         {
             Debug.Assert(vec1.Length == vec2.Length);
 
-            var slots = Vector<float>.Count;
+            // @Info: Changed Vector<float>.Count to Vector4 4 because 
+            // Vector<float>.Count == 8 but takes only 4 floats
+            var slots = 4; // Vector<float>.Count;
             var allignment = 0;
             var distance = float.MinValue;
-            var maxs = new Vector<float>(float.MinValue);
+            var maxs = new Vector4(float.MinValue);
             for (;
                  allignment + slots < vec1.Length;
                  allignment += slots)
             {
-                var v1 = new Vector<float>(vec1.ToArray(), allignment);
-                var v2 = new Vector<float>(vec2.ToArray(), allignment);
-                maxs = Vector.Max(Vector.Abs(v1 - v2), maxs);
+                var v1 = new Vector4(vec1[allignment],
+                                     vec1[allignment + 1],
+                                     vec1[allignment + 2],
+                                     vec1[allignment + 3]);
+
+                var v2 = new Vector4(vec2[allignment],
+                                     vec2[allignment + 1],
+                                     vec2[allignment + 2],
+                                     vec2[allignment + 3]);
+
+                maxs = Vector4.Max(Vector4.Abs(v1 - v2), maxs);
             }
 
-            for (var slot = 0;
-                 slot < slots;
-                 ++slot)
-            {
-                distance = MathF.Max(distance, maxs[slot]);
-            }
-
+            
+            distance = MathF.Max(distance, maxs.X);
+            distance = MathF.Max(distance, maxs.Y);
+            distance = MathF.Max(distance, maxs.Z);
+            distance = MathF.Max(distance, maxs.W);
+            
             for (;
                  allignment < vec1.Length;
                  ++allignment)
