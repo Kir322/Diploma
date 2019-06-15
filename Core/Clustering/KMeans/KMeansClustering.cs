@@ -3,6 +3,7 @@ using System.Diagnostics;
 using System.Threading.Tasks;
 using Diploma.Core.Distances;
 using Diploma.Core.Helpers;
+using System.Linq;
 
 namespace Diploma.Core.Clustering.KMeans
 {
@@ -33,7 +34,8 @@ namespace Diploma.Core.Clustering.KMeans
 
         private static void CalculateDistancesBetweenRecordsAndCentroids(float[,] distances, float[][] records, float[][] centroids)
         {
-            Parallel.For(0, centroids.Length, clusterIndex => {
+            Parallel.For(0, centroids.Length, clusterIndex =>
+            {
                 for (int numRecords = 0;
                      numRecords < records.Length;
                      ++numRecords)

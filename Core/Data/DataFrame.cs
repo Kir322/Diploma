@@ -162,15 +162,15 @@ namespace Diploma.Core.Data
                     var value = (a + b) * (this.data[row][col] - this.Min[col]) /
                                           (this.Max[col] - this.Min[col]) - a;
                     this.data[row][col] = value;
-                    if (this.Min[col] > value)
-                    {
-                        this.Min[col] = value;
-                    }
+                    // if (this.Min[col] > value)
+                    // {
+                    //     this.Min[col] = value;
+                    // }
 
-                    if (this.Max[col] < value)
-                    {
-                        this.Max[col] = value;
-                    }
+                    // if (this.Max[col] < value)
+                    // {
+                    //     this.Max[col] = value;
+                    // }
                 }
             }
         }

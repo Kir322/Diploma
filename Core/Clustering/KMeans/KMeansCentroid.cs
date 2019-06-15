@@ -1,10 +1,9 @@
-﻿using Diploma.Core.Helpers;
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.Diagnostics;
 using System.Numerics;
-using System.Text;
 using System.Threading.Tasks;
+
+using Diploma.Core.Helpers;
 
 namespace Diploma.Core.Clustering.KMeans
 {
@@ -57,31 +56,36 @@ namespace Diploma.Core.Clustering.KMeans
                 {
                     var recordIndex = 0;
                     var sum = 0.0f;
-                    var clusterSize = 1;
-                    for (;
-                         recordIndex + slots < records.Length;
-                         recordIndex += slots)
-                    {
-                        if (labels[recordIndex] == clusterIndex)
-                        {
-                            var v = new Vector4(records[recordIndex + 0][featureIndex],
-                                                records[recordIndex + 1][featureIndex],
-                                                records[recordIndex + 2][featureIndex],
-                                                records[recordIndex + 3][featureIndex]);
+                    var clusterSize = 0;
+                    // TROUBLE
+                    // for (;
+                    //      recordIndex + slots < records.Length;
+                    //      recordIndex += slots)
+                    // {
+                    //     if (labels[recordIndex] == clusterIndex)
+                    //     {
+                    //         var v = new Vector4(records[recordIndex + 0][featureIndex],
+                    //                             records[recordIndex + 1][featureIndex],
+                    //                             records[recordIndex + 2][featureIndex],
+                    //                             records[recordIndex + 3][featureIndex]);
 
-                            accum += v;
-                            ++clusterSize;
-                        }
-                    }
+                    //         accum += v;
+                    //         ++clusterSize;
+                    //     }
+                    // }
 
-                    sum += Vector4.Dot(accum, Vector4.One);
-                    accum = Vector4.Zero;
+                    // sum += Vector4.Dot(accum, Vector4.One);
+                    // accum = Vector4.Zero;
                     
                     for (;
                          recordIndex < records.Length;
                          ++recordIndex)
                     {
-                        sum += records[recordIndex][featureIndex];
+                        if (labels[recordIndex] == clusterIndex) 
+                        {
+                            sum += records[recordIndex][featureIndex];
+                            ++clusterSize;
+                        }
                     }
 
                     centroids[clusterIndex][featureIndex] = sum / clusterSize;

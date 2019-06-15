@@ -1,7 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Text;
+using System.Linq;
 
 namespace Diploma.Core.Helpers
 {
@@ -38,6 +37,12 @@ namespace Diploma.Core.Helpers
             }
 
             return result;
+        }
+
+        public static T[] GetColumn<T>(T[][] arr, int col)
+        {
+            // @Refactor: Very slow
+            return arr.Select(a => a[col]).ToArray();
         }
     }
 }
